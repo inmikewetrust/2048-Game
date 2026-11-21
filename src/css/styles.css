@@ -105,6 +105,23 @@ body {
   transform: scale(0.97);
 }
 
+.howto-link {
+  display: inline-block;
+  text-decoration: none;
+  padding: 10px 24px;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: bold;
+  color: #f9f6f2;
+  background-color: #8f7a66;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out, transform 0.05s;
+}
+
+.howto-link:hover { background-color: #a58d77; }
+.howto-link:active { transform: scale(0.97); }
+
 /* ---------- Status text ---------- */
 .Status {
   margin: 0;
