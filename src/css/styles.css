@@ -71,8 +71,18 @@ body {
   font-size: 6cqw;
 }
 
-/* ---------- Button ---------- */
-#LeStartButton {
+/* ---------- Buttons ---------- */
+.buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#LeStartButton,
+.howto-link {
+  display: inline-block;
+  text-decoration: none;
   padding: 10px 24px;
   font-family: inherit;
   font-size: 18px;
@@ -85,11 +95,13 @@ body {
   transition: background-color 0.15s ease-in-out, transform 0.05s;
 }
 
-#LeStartButton:hover {
+#LeStartButton:hover,
+.howto-link:hover {
   background-color: #a58d77;
 }
 
-#LeStartButton:active {
+#LeStartButton:active,
+.howto-link:active {
   transform: scale(0.97);
 }
 

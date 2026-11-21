@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>2048</title>
     <link rel="stylesheet" href="src/css/styles.css">
 </head>
 <body>
@@ -29,7 +29,10 @@
         <div class="cell"></div>
         <div class="cell"></div>
     </div>
-    <button id="LeStartButton">Start game</button>
+    <div class="buttons">
+        <button id="LeStartButton">Start game</button>
+        <a class="howto-link" href="how-to-play.html">How to play</a>
+    </div>
     <p class="Status"></p>
 
     <h3>Local Top 5</h3>
@@ -39,6 +42,6 @@
         </thead>
         <tbody></tbody>
     </table>
+    <script src="src/js/logic.js"></script>
 </body>
 </html>
-<script src="src/js/logic.js"></script>

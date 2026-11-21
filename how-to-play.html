@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2048 – About &amp; How to Play</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #faf8ef;
+    color: #776e65;
+    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+  }
+  main { max-width: 680px; margin: 0 auto; padding: 40px 20px 64px; }
+  h1 { font-size: clamp(3.5rem, 18vw, 6rem); line-height: 1; margin: 0 0 8px; color: #776e65; letter-spacing: -0.02em; }
+  .lead { font-size: 1.2rem; margin: 0 0 32px; }
+  h2 { font-size: 1.5rem; margin: 48px 0 12px; color: #5f564e; }
+  p { margin: 0 0 14px; }
+
+  /* tiles, same colours as the game */
+  .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 16px 0 8px; }
+  .t {
+    width: 64px; height: 64px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 1.5rem; background: #eee4da; color: #776e65;
+  }
+  .t.v4 { background: #ede0c8; }
+  .t.v8 { background: #f2b179; color: #f9f6f2; }
+  .t.v16 { background: #f59563; color: #f9f6f2; }
+  .t.v32 { background: #f67c5f; color: #f9f6f2; }
+  .t.v64 { background: #f65e3b; color: #f9f6f2; }
+  .t.v2048 { background: #edc22e; color: #f9f6f2; font-size: 1.1rem; box-shadow: 0 0 20px 4px rgba(243,215,116,.6); }
+  .op { font-size: 1.6rem; font-weight: bold; }
+  .caption { font-size: .95rem; margin: 0 0 8px; }
+
+  /* board on the controls section */
+  .board { display: inline-grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 8px; background: #bbada0; border-radius: 8px; }
+  .board .t { width: 52px; height: 52px; background: rgba(238,228,218,.35); }
+  .board .t.v2 { background: #eee4da; }
+  .board .t.v4 { background: #ede0c8; }
+
+  .keys { display: flex; gap: 32px; flex-wrap: wrap; margin: 16px 0; }
+  .pad { display: grid; grid-template-columns: repeat(3, 44px); grid-template-rows: repeat(2, 44px); gap: 6px; }
+  .k {
+    display: flex; align-items: center; justify-content: center;
+    background: #8f7a66; color: #f9f6f2; font-weight: bold; border-radius: 6px;
+  }
+  .pad .up { grid-column: 2; grid-row: 1; }
+  .pad .l { grid-column: 1; grid-row: 2; }
+  .pad .d { grid-column: 2; grid-row: 2; }
+  .pad .r { grid-column: 3; grid-row: 2; }
+  .keys figcaption { font-size: .95rem; margin-top: 8px; }
+  .keys figure { margin: 0; }
+
+  ol, ul { padding-left: 1.2rem; margin: 0 0 14px; }
+  li { margin-bottom: 8px; }
+  .panel { background: #bbada0; color: #f9f6f2; border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
+  .panel strong { color: #fff; }
+
+  .play {
+    display: inline-block; margin-top: 40px; padding: 12px 28px;
+    background: #8f7a66; color: #f9f6f2; font-weight: bold; font-size: 1.1rem;
+    text-decoration: none; border-radius: 6px; transition: background-color .15s;
+  }
+  .play:hover { background: #a58d77; }
+  a:focus-visible { outline: 3px solid #f67c5f; outline-offset: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>2048</h1>
+  <p class="lead">A sliding-tile number puzzle: merge matching numbers until you build the 2048 tile.</p>
+
+  <h2>What is this game?</h2>
+  <p>2048 is played on a 4×4 grid. Every tile holds a number, and every number is a power of two. You slide all the tiles in one direction at once, and when two tiles with the same number bump into each other they join into one tile with double the value.</p>
+  <p>The rules are simple, but the board fills up fast. Each move is a small decision about where the tiles will end up.</p>
+
+  <h2>Purpose of this project</h2>
+  <p>This version was built as our third web project. It brings together the three core web technologies: <strong>HTML</strong> for the page structure, <strong>CSS</strong> for the board and tile colours, and <strong>JavaScript</strong> for the game logic (moving, merging, scoring, and detecting a win or loss).</p>
+  <p>As a game, the purpose is to be a quick brain teaser: beat your own best score, climb the Local Top 5, and see if you can reach 2048.</p>
+
+  <h2>How merging works</h2>
+  <div class="row">
+    <div class="t">2</div><span class="op">+</span><div class="t">2</div><span class="op">=</span><div class="t v4">4</div>
+  </div>
+  <div class="row">
+    <div class="t v8">8</div><span class="op">+</span><div class="t v8">8</div><span class="op">=</span><div class="t v16">16</div>
+  </div>
+  <p class="caption">Only equal numbers merge, and each tile can merge once per move. A row of 2, 2, 2, 2 sliding left becomes 4, 4, not 8.</p>
+  <div class="row">
+    <div class="t v16">16</div><span class="op">→</span><div class="t v32">32</div><span class="op">→</span><div class="t v64">64</div><span class="op">…</span><div class="t v2048">2048</div>
+  </div>
+
+  <h2>How to play</h2>
+  <figure class="keys">
+    <figure>
+      <div class="pad" role="img" aria-label="Arrow keys">
+        <div class="k up">↑</div><div class="k l">←</div><div class="k d">↓</div><div class="k r">→</div>
+      </div>
+      <figcaption>Arrow keys</figcaption>
+    </figure>
+    <figure>
+      <div class="pad" role="img" aria-label="W A S D keys">
+        <div class="k up">W</div><div class="k l">A</div><div class="k d">S</div><div class="k r">D</div>
+      </div>
+      <figcaption>or W, A, S, D</figcaption>
+    </figure>
+  </figure>
+  <ol>
+    <li>Press <strong>Start game</strong>. The board begins with a single tile, a 2.</li>
+    <li>Press a direction key. Every tile slides as far as it can that way, and matching neighbours merge.</li>
+    <li>If your move changed the board, a new 2 appears in a random empty cell. A move that changes nothing does not add a tile.</li>
+    <li>Keep going. Each merge adds the value of the new tile to your score, so merging two 8s earns 16 points.</li>
+  </ol>
+
+  <h2>Winning and losing</h2>
+  <div class="panel">
+    <p><strong>You win</strong> when a 2048 tile appears. The status line reads WON and the game ends.</p>
+    <p style="margin:0"><strong>You lose</strong> when the board is full and no two neighbouring tiles match. The status line reads LOST.</p>
+  </div>
+  <p>When a game ends, you'll be asked for your name. Your score is saved to the <strong>Local Top 5</strong> table below the board. These scores are stored in your own browser, so they stay on your device and aren't shared with other players.</p>
+  <p>Press <strong>Start game</strong> at any time to reset the board and your score.</p>
+
+  <h2>Tips</h2>
+  <ul>
+    <li>Choose a corner and keep your biggest tile there.</li>
+    <li>Stick to two or three directions, and avoid the one that would pull the big tile out of its corner.</li>
+    <li>Build rows in descending order (for example 64, 32, 16, 8) so a single move can chain several merges.</li>
+    <li>Don't rush. Before each move, look at where the new 2 might land.</li>
+  </ul>
+
+  <a class="play" href="index.html">Play the game</a>
+</main>
+</body>
+</html>
